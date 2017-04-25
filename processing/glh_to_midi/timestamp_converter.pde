@@ -1,6 +1,8 @@
 //import java.util.Date;
 import java.text.SimpleDateFormat;
 
+//TODO calculer les milisecondes entre chaque captation de Google
+
 void convert_UTC_to_INT(String timestampMs){
   String timestamp = timestamp_to_UTC(timestampMs); 
   String[] m = match(timestamp, "^(\\d{4})(\\d{2})(\\d{2}):(\\d{2}):(\\d{2}):(\\d{2})\\.(\\d{3})$");

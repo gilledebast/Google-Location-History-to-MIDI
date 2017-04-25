@@ -2,17 +2,20 @@ import themidibus.*; //Import the library
 MidiBus MidiBus; // The MidiBus
 
 JSONArray GooglePositionHistory;
+
 float latlong_to_midi;
-String timestampMs = "1489432985771";
-//int lastTimestampMs = 1489432985;
+
+String     timestampMs = "1489432985771";
+String lastTimestampMs = "1489432985771";
+
 //long timestamp = 1489432985771L;
 
-void setup() {  
+void setup() {
   size(400, 400);
   background(0);
   
-  //MidiBus.list();
   /********BUS MIDI*************/
+  //MidiBus.list();
   MidiBus = new MidiBus(this, -1, "Bus 1");
 
   Position_to_midi();
@@ -46,5 +49,5 @@ void Position_to_midi(){
     //println(timestampMs);
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
-  //lastTimestampMs = timestampMs;
+  lastTimestampMs = timestampMs;
 }
