@@ -12,8 +12,8 @@ int processTimestamp(String timestampMs, String lastTimestampMs){
    delay_btw_timestamp = -delay_btw_timestamp;
   }
 
-  println(delay_btw_timestamp/1000);
-  return delay_btw_timestamp/100;
+  //println(delay_btw_timestamp/tempo);
+  return delay_btw_timestamp/tempo;
 }
 
 int convert_UTC_to_INT(String timestampMs){

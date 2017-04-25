@@ -8,7 +8,7 @@ float latlong_to_midi;
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
 
-//long timestamp = 1489432985771L;
+int tempo = 100;
 
 void setup() {
   size(400, 400);
