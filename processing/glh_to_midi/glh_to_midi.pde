@@ -3,35 +3,22 @@ MidiBus MidiBus; // The MidiBus
 
 JSONArray GooglePositionHistory;
 float latlong_to_midi;
-int timestampMs;
-int lastTimestampMs = 1489432985;
+String timestampMs = "1489432985771";
+//int lastTimestampMs = 1489432985;
+//long timestamp = 1489432985771L;
 
-void setup() {
-  
+void setup() {  
   size(400, 400);
   background(0);
   
   //MidiBus.list();
-  
   /********BUS MIDI*************/
   MidiBus = new MidiBus(this, -1, "Bus 1");
-  
+
   Position_to_midi();
 }
 
 void loop(){
-  
-}
-
-void toMidi(int channel, int pitch, int velocity, int delay) {
-  MidiBus.sendNoteOn(channel, pitch, velocity); // Send a Midi noteOn
-  delay(delay);
-  MidiBus.sendNoteOff(channel, pitch, velocity); // Send a Midi noteOff
-}
-
-void delay(int time) {
-  int current = millis();
-  while (millis () < current+time) Thread.yield();
 }
 
 void Position_to_midi(){
@@ -41,7 +28,9 @@ void Position_to_midi(){
     
     JSONObject locations = GooglePositionHistory.getJSONObject(i); 
 
-    //timestampMs = locations.getInt("timestampMs");
+    timestampMs = locations.getString("timestampMs");
+    convert_UTC_to_INT(timestampMs);
+    //timestamp = timestampMs;
     
     int latitude = locations.getInt("latitudeE7");
     int longitude = locations.getInt("longitudeE7");
@@ -54,7 +43,8 @@ void Position_to_midi(){
     
     toMidi(2, int(latlong_to_midi), 127, accuracy*10);
     
-    println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
+    //println(timestampMs);
+    //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
-  lastTimestampMs = timestampMs;
+  //lastTimestampMs = timestampMs;
 }
