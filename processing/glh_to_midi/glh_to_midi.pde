@@ -32,21 +32,17 @@ void Position_to_midi(){
     JSONObject locations = GooglePositionHistory.getJSONObject(i); 
 
     timestampMs = locations.getString("timestampMs");
-    convert_UTC_to_INT(timestampMs);
-    //timestamp = timestampMs;
     
     int latitude = locations.getInt("latitudeE7");
     int longitude = locations.getInt("longitudeE7");
     
     int accuracy = locations.getInt("accuracy");
     
+    //latlong_to_midi =
     latlong_to_midi = map(latlong_to_midi, 464948000, 464948150, 0, 127);
     
-    //int midiDelay = (timestampMs - lastTimestampMs)/10000000;
+    toMidi(2, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
     
-    toMidi(2, int(latlong_to_midi), 127, accuracy*10);
-    
-    //println(timestampMs);
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
   lastTimestampMs = timestampMs;

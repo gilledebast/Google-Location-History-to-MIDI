@@ -1,10 +1,23 @@
 //import java.util.Date;
 import java.text.SimpleDateFormat;
 
-//TODO calculer les milisecondes entre chaque captation de Google
+int processTimestamp(String timestampMs, String lastTimestampMs){
+  
+  int last = convert_UTC_to_INT(lastTimestampMs);
+  int first = convert_UTC_to_INT(timestampMs);
+  
+  int delay_btw_timestamp = (first - last)/1000;
+  
+  if(delay_btw_timestamp < 0){
+   delay_btw_timestamp = -delay_btw_timestamp;
+  }
 
-void convert_UTC_to_INT(String timestampMs){
-  String timestamp = timestamp_to_UTC(timestampMs); 
+  println(delay_btw_timestamp/1000);
+  return delay_btw_timestamp/100;
+}
+
+int convert_UTC_to_INT(String timestampMs){
+  String timestamp = timestamp_to_UTC(timestampMs);
   String[] m = match(timestamp, "^(\\d{4})(\\d{2})(\\d{2}):(\\d{2}):(\\d{2}):(\\d{2})\\.(\\d{3})$");
     
   int year = int(m[1]);
@@ -14,9 +27,12 @@ void convert_UTC_to_INT(String timestampMs){
   int hours = int(m[4]);
   int minutes = int(m[5]);
   int seconds = int(m[6]);
-  int millisecs = int (m[7]);
-    
-  println("date:"+day+"/"+month+"/"+year+" heure:"+hours+" minutes:"+minutes+" seconds:"+seconds+" millisecs:"+millisecs);
+  int millisecs = int(m[7]);
+   
+  int currentmillis = hours*minutes*seconds*1000+millisecs;
+  
+  //println("date:"+day+"/"+month+"/"+year+" heure:"+hours+" minutes:"+minutes+" seconds:"+seconds+" millisecs:"+millisecs);
+  return currentmillis;
 }
 
 String timestamp_to_UTC(String timestampMs) {
