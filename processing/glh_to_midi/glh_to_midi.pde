@@ -3,12 +3,15 @@ MidiBus MidiBus; // The MidiBus
 
 JSONArray GooglePositionHistory;
 
-float latlong_to_midi;
+float latlong_to_midi = 0;
 
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
 
 int tempo = 100;
+
+int latlong_min = 555555555;
+int latlong_max = 444444444;
 
 void setup() {
   size(400, 400);
@@ -38,10 +41,31 @@ void Position_to_midi(){
     
     int accuracy = locations.getInt("accuracy");
     
-    //latlong_to_midi =
-    latlong_to_midi = map(latlong_to_midi, 464948000, 464948150, 0, 127);
+    /*********************************/
+
+    int latlong = latitude - longitude;
+
+    if(latlong < 0){
+      latlong = -latlong;
+    }
     
-    toMidi(2, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
+    if(latlong_min > latlong){
+      latlong_min = latlong;
+    }
+    if(latlong_max < latlong){
+      latlong_max = latlong;
+    }
+    
+    latlong_to_midi = map(latlong_to_midi, latlong_min, latlong_max, 0, 127);
+    
+    println(latlong_to_midi);
+    
+    //println(latlong_min+" < "+latlong+" < "+latlong_max);
+    /*********************************/
+    //println(int(latlong_to_midi));
+    
+    //int(latlong_to_midi)
+    toMidi(2, 100, accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
     
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
