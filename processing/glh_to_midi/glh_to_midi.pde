@@ -1,14 +1,22 @@
+/* ----------------------------------------------------------------------------------------------------
+ * Google Position History to Midi, 2017
+ * Update: 02/05/17
+ *
+ * V0.1
+ * Written by Bastien DIDIER
+ *
+ * ----------------------------------------------------------------------------------------------------
+ */
+
 import themidibus.*; //Import the library
 MidiBus MidiBus; // The MidiBus
 
 JSONArray GooglePositionHistory;
 
-float latlong_to_midi = 0;
+int tempo = 100;
 
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
-
-int tempo = 100;
 
 int latlong_min = 555555555;
 int latlong_max = 444444444;
@@ -20,11 +28,14 @@ void setup() {
   /********BUS MIDI*************/
   //MidiBus.list();
   MidiBus = new MidiBus(this, -1, "Bus 1");
-
+  
+  //TODO Init GUI
+  
   Position_to_midi();
 }
 
 void loop(){
+  //TODO Update GUI when .json is loaded
 }
 
 void Position_to_midi(){
@@ -45,11 +56,11 @@ void Position_to_midi(){
 
     int latlong = latitude - longitude;
     
-    //println(latlong);
-    
     if(latlong < 0){
       latlong = -latlong;
     }
+    
+    /*********************************/
     
     if(latlong_min > latlong){
       latlong_min = latlong;
@@ -58,8 +69,10 @@ void Position_to_midi(){
       latlong_max = latlong;
     }
     
-    latlong_to_midi = map(latlong, latlong_min, latlong_max, 0, 127);
+    float latlong_to_midi = map(latlong, latlong_min, latlong_max, 0, 127);
 
+    /*********************************/
+    
     //     Channel, Pitch               , velocity   , delay             
     toMidi(      2, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
     
