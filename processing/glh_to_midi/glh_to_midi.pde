@@ -44,7 +44,9 @@ void Position_to_midi(){
     /*********************************/
 
     int latlong = latitude - longitude;
-
+    
+    //println(latlong);
+    
     if(latlong < 0){
       latlong = -latlong;
     }
@@ -56,16 +58,10 @@ void Position_to_midi(){
       latlong_max = latlong;
     }
     
-    latlong_to_midi = map(latlong_to_midi, latlong_min, latlong_max, 0, 127);
-    
-    println(latlong_to_midi);
-    
-    //println(latlong_min+" < "+latlong+" < "+latlong_max);
-    /*********************************/
-    //println(int(latlong_to_midi));
-    
-    //int(latlong_to_midi)
-    toMidi(2, 100, accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
+    latlong_to_midi = map(latlong, latlong_min, latlong_max, 0, 127);
+
+    //     Channel, Pitch               , velocity   , delay             
+    toMidi(      2, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
     
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
