@@ -13,7 +13,7 @@ MidiBus MidiBus; // The MidiBus
 
 JSONArray GooglePositionHistory;
 
-int tempo = 100;
+int tempo = 1000;
 
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
@@ -30,12 +30,11 @@ void setup() {
   MidiBus = new MidiBus(this, -1, "Bus 1");
   
   //TODO Init GUI
-  
   Position_to_midi();
 }
 
 void loop(){
-  //TODO Update GUI when .json is loaded
+  //TODO Update GUI when .json is loaded 
 }
 
 void Position_to_midi(){
@@ -78,5 +77,6 @@ void Position_to_midi(){
     
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
+  
   lastTimestampMs = timestampMs;
 }

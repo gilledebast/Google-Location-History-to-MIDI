@@ -31,7 +31,9 @@ int convert_UTC_to_INT(String timestampMs){
    
   int currentmillis = hours*minutes*seconds*1000+millisecs;
   
-  //println("date:"+day+"/"+month+"/"+year+" heure:"+hours+" minutes:"+minutes+" seconds:"+seconds+" millisecs:"+millisecs);
+  String date = "Nous somme le "+day+"/"+month+"/"+year+" il est "+hours+"h"+minutes+" et "+seconds+"s";
+  println(date);
+  
   return currentmillis;
 }
 
