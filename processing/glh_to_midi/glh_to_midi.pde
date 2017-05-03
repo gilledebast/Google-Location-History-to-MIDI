@@ -40,7 +40,8 @@ void loop(){
 void Position_to_midi(){
   GooglePositionHistory = loadJSONArray("gph2.json");
 
-  for (int i = 0; i < GooglePositionHistory.size(); i++) {
+  //for (int i = 0; i < GooglePositionHistory.size(); i++) {
+  for (int i = GooglePositionHistory.size()-1; i > 0; i--) {
     
     JSONObject locations = GooglePositionHistory.getJSONObject(i); 
 
