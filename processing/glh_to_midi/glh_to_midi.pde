@@ -12,14 +12,21 @@ import themidibus.*; //Import the library
 MidiBus MidiBus; // The MidiBus
 
 JSONArray GooglePositionHistory;
+String position_history_file = "gph2.json";
 
-int tempo = 1000;
+int tempo = 100;
 
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
 
+int note_min = 30;
+int note_max = 70; //127
+
 int latlong_min = 555555555;
 int latlong_max = 444444444;
+
+float latlong_to_midi;
+float last_latlong_to_midi;
 
 void setup() {
   size(400, 400);
@@ -38,7 +45,7 @@ void loop(){
 }
 
 void Position_to_midi(){
-  GooglePositionHistory = loadJSONArray("gph2.json");
+  GooglePositionHistory = loadJSONArray(position_history_file);
 
   //for (int i = 0; i < GooglePositionHistory.size(); i++) {
   for (int i = GooglePositionHistory.size()-1; i > 0; i--) {
@@ -62,6 +69,7 @@ void Position_to_midi(){
     
     /*********************************/
     
+    //TODO le rendre dynamique à l'échelle d'une journée
     if(latlong_min > latlong){
       latlong_min = latlong;
     }
@@ -69,15 +77,21 @@ void Position_to_midi(){
       latlong_max = latlong;
     }
     
-    float latlong_to_midi = map(latlong, latlong_min, latlong_max, 0, 127);
+    latlong_to_midi = map(latlong, latlong_min, latlong_max, note_min, note_max);
 
     /*********************************/
     
-    //     Channel, Pitch               , velocity   , delay             
-    toMidi(      2, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
+    //TODO Ménage
+    //if(last_latlong_to_midi != latlong_to_midi && accuracy > 100){
+    println(accuracy);
+    //if(accuracy < 20){
+      //     Channel, Pitch               , velocity   , delay             
+      toMidi(      0, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
     
+    //}
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
   }
   
+  //last_latlong_to_midi = latlong_to_midi;
   lastTimestampMs = timestampMs;
 }
