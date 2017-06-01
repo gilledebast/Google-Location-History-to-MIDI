@@ -14,7 +14,7 @@ MidiBus MidiBus; // The MidiBus
 JSONArray GooglePositionHistory;
 String position_history_file = "gph2.json";
 
-int tempo = 100;
+int tempo = 3000;
 
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
@@ -84,22 +84,14 @@ void Position_to_midi(){
 
     /*********************************/
     
-    /*if(day > last_day){
-      println("another day : "+day);
-    }*/
-    
-    //last_day=day;
-    
-    //TODO Ménage
-    //if(last_latlong_to_midi != latlong_to_midi && accuracy > 100){
-    //println(accuracy);
-    
-    //if(accuracy < 20){
+    //if(day != last_day){
     
       //     Channel, Pitch               , velocity   , delay             
       toMidi(      0, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
-
     //}
+    
+    last_day=day;
+    
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
 
     /*********************************/
