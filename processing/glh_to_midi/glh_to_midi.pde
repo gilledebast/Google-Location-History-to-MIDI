@@ -28,6 +28,9 @@ int latlong_max = 444444444;
 float latlong_to_midi;
 float last_latlong_to_midi;
 
+int day = 0;
+int last_day = 1;
+
 void setup() {
   size(400, 400);
   background(0);
@@ -81,17 +84,26 @@ void Position_to_midi(){
 
     /*********************************/
     
+    /*if(day > last_day){
+      println("another day : "+day);
+    }*/
+    
+    //last_day=day;
+    
     //TODO Ménage
     //if(last_latlong_to_midi != latlong_to_midi && accuracy > 100){
-    println(accuracy);
+    //println(accuracy);
+    
     //if(accuracy < 20){
+    
       //     Channel, Pitch               , velocity   , delay             
       toMidi(      0, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
-    
+
     //}
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
+
+    /*********************************/
+    
+    lastTimestampMs = timestampMs;
   }
-  
-  //last_latlong_to_midi = latlong_to_midi;
-  lastTimestampMs = timestampMs;
 }
