@@ -14,7 +14,7 @@ MidiBus MidiBus; // The MidiBus
 JSONArray GooglePositionHistory;
 String position_history_file = "gph2.json";
 
-int tempo = 3000;
+int tempo = 300;
 
 String     timestampMs = "1489432985771";
 String lastTimestampMs = "1489432985771";
@@ -28,8 +28,13 @@ int latlong_max = 444444444;
 float latlong_to_midi;
 float last_latlong_to_midi;
 
-int day = 0;
-int last_day = 1;
+/*int day = 0;
+int last_day = 1;*/
+
+int process;
+int last_process;
+int last_latlong;
+int count = 1;
 
 void setup() {
   size(400, 400);
@@ -84,13 +89,26 @@ void Position_to_midi(){
 
     /*********************************/
     
-    //if(day != last_day){
-    
-      //     Channel, Pitch               , velocity   , delay             
-      toMidi(      0, int(latlong_to_midi), accuracy*10, processTimestamp(timestampMs, lastTimestampMs));
-    //}
-    
-    last_day=day;
+    if(processTimestamp(timestampMs, lastTimestampMs) > 50){ // ICI ca supprime les petites notes < en dessous de 10ms
+      
+      process = processTimestamp(timestampMs, lastTimestampMs);
+      
+      if(process != last_process){
+        
+        if(int(latlong_to_midi) != last_latlong){
+        
+          //     Channel, Pitch               , velocity      , delay             
+          toMidi(      0, int(latlong_to_midi), accuracy*count, processTimestamp(timestampMs, lastTimestampMs)*count*1); //
+          count++;
+          
+        } else {
+          count = 1;
+        }
+      }
+      
+      last_process = process;
+      last_latlong = int(latlong_to_midi);
+    }
     
     //println(accuracy + ", " + timestampMs + " , " + latitude + ", " + longitude);
 
